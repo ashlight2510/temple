@@ -223,8 +223,8 @@
         </div>
 
         <p class="mt-4 text-sm text-white/50">
-          ※ 불경 번역문을 인용하지 않으며, 가르침에서 얻은 영감으로 새로 쓴 문장만
-          제공합니다.
+          ※ 불경 번역문을 인용하지 않으며, 가르침에서 얻은 영감으로 새로 쓴
+          문장만 제공합니다.
         </p>
       </section>
 
@@ -445,7 +445,10 @@
 
           const btn = card.querySelector(".copyBtn");
           btn.addEventListener("click", async () => {
-            const ok = await copyText(formatCopyText(item.text));
+            const copyTextWithUrl = `${formatCopyText(
+              item.text
+            )} https://temple.funnyfunny.cloud/`;
+            const ok = await copyText(copyTextWithUrl);
             if (ok) {
               btn.textContent = "복사됨";
               setTimeout(() => (btn.textContent = "복사"), 900);
