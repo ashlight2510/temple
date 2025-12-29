@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>오늘의 마음 한 문장</title>
+
+    <!-- SEO -->
+    <meta
+      name="description"
+      content="불교의 가르침에서 영감을 받은 하루 한 문장. 짧고 단단한 문장으로 마음을 고요하게 합니다."
+    />
+    <meta
+      name="keywords"
+      content="오늘의 마음, 하루 한 문장, 불교, 명상, 마음공부, 영감 문장, 고요"
+    />
+    <meta name="robots" content="index,follow" />
+    <link rel="canonical" href="https://temple.funnyfunny.cloud/" />
+
+    <!-- Open Graph (og-image text MUST be English) -->
+    <meta property="og:title" content="Temple Wisdom" />
+    <meta
+      property="og:description"
+      content="불교의 가르침에서 영감을 받은 하루 한 문장, 현대 한국어로 전합니다."
+    />
+    <meta
+      property="og:image"
+      content="https://dummyimage.com/1200x630/0b1220/ffffff&text=Temple+Wisdom"
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://temple.funnyfunny.cloud/" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Temple Wisdom" />
+    <meta
+      name="twitter:description"
+      content="불교의 가르침에서 영감을 받은 하루 한 문장, 현대 한국어로 전합니다."
+    />
+    <meta
+      name="twitter:image"
+      content="https://dummyimage.com/1200x630/0b1220/ffffff&text=Temple+Wisdom"
+    />
+
+    <!-- Favicon (auto-generated SVG) -->
+    <link
+      rel="icon"
+      type="image/svg+xml"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0%25' y1='100%25' x2='100%25' y2='0%25'%3E%3Cstop offset='0%25' stop-color='%230b1220'/%3E%3Cstop offset='100%25' stop-color='%238b5cf6'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='14' fill='url(%23g)'/%3E%3Cpath d='M18 26c6-8 22-8 28 0' fill='none' stroke='%23ddd6fe' stroke-width='2.5' stroke-linecap='round'/%3E%3Cpath d='M18 38c6 8 22 8 28 0' fill='none' stroke='%23ddd6fe' stroke-width='2.5' stroke-linecap='round'/%3E%3Ccircle cx='32' cy='32' r='4' fill='rgba(255,255,255,0.18)' stroke='%23e9d5ff' stroke-width='2'/%3E%3C/svg%3E"
+    />
+
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+
+  <body
+    class="min-h-screen bg-gradient-to-b from-slate-950 to-slate-900 text-white"
+  >
+    <main class="max-w-3xl mx-auto px-4 py-10">
+      <!-- Header -->
+      <header class="text-center mb-8">
+        <div
+          class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10"
+        >
+          <span class="text-violet-300 text-sm font-semibold">오늘의 마음</span>
+          <span class="text-white/50 text-sm">Temple Wisdom</span>
+        </div>
+        <h1 class="mt-4 text-3xl md:text-4xl font-extrabold tracking-tight">
+          하루 한 문장
+        </h1>
+        <p class="mt-2 text-white/70">
+          불교의 가르침에서 영감을 받은 하루 한 문장
+        </p>
+      </header>
+
+      <!-- Today Card -->
+      <section
+        class="rounded-2xl bg-white/5 border border-white/10 p-6 shadow-lg"
+      >
+        <div class="flex items-start justify-between gap-4">
+          <div class="min-w-0">
+            <p class="text-sm text-white/60">오늘의 문장</p>
+            <p
+              id="todayText"
+              class="mt-2 text-xl md:text-2xl font-bold leading-relaxed"
+            ></p>
+            <div class="mt-3 flex flex-wrap items-center gap-2">
+              <span
+                id="todayTheme"
+                class="text-xs px-2 py-1 rounded-full bg-violet-500/15 text-violet-200 border border-violet-500/20"
+              ></span>
+              <span
+                class="text-xs px-2 py-1 rounded-full bg-white/5 text-white/60 border border-white/10"
+              >
+                원문 인용 없이 재해석 문장
+              </span>
+            </div>
+          </div>
+
+          <div class="shrink-0 flex flex-col gap-2">
+            <button
+              id="copyTodayBtn"
+              class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-violet-500 hover:bg-violet-400 text-slate-950 font-semibold transition-colors"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="w-4 h-4"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path d="M8 4h10a2 2 0 0 1 2 2v10"></path>
+                <rect x="4" y="8" width="14" height="14" rx="2"></rect>
+              </svg>
+              복사
+            </button>
+
+            <button
+              id="shareTodayBtn"
+              class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-white/10 hover:bg-white/15 border border-white/10 text-white font-semibold transition-colors"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="w-4 h-4"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <circle cx="12" cy="5" r="3"></circle>
+                <circle cx="5" cy="19" r="3"></circle>
+                <circle cx="19" cy="19" r="3"></circle>
+                <path d="M8.59 17.51 15.42 13M8.59 6.49l6.83 4.02"></path>
+              </svg>
+              공유하기
+            </button>
+
+            <p class="text-xs text-white/50 leading-snug">
+              공유 시 오늘의 문장과 서비스 링크, 출처가 함께 전달됩니다.
+            </p>
+          </div>
+        </div>
+
+        <div class="mt-5 grid grid-cols-1 md:grid-cols-3 gap-3">
+          <div class="rounded-xl bg-black/20 border border-white/10 p-4">
+            <p class="text-xs text-white/50">업데이트</p>
+            <p id="todayDate" class="mt-1 font-semibold"></p>
+          </div>
+          <div class="rounded-xl bg-black/20 border border-white/10 p-4">
+            <p class="text-xs text-white/50">문장 수</p>
+            <p class="mt-1 font-semibold"><span id="countText"></span>개</p>
+          </div>
+          <div class="rounded-xl bg-black/20 border border-white/10 p-4">
+            <p class="text-xs text-white/50">랜덤 규칙</p>
+            <p class="mt-1 font-semibold">날짜 기반 고정</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Controls -->
+      <section class="mt-8 rounded-2xl bg-white/5 border border-white/10 p-6">
+        <div class="flex flex-col md:flex-row md:items-end gap-4">
+          <label class="flex-1">
+            <span class="block text-sm text-white/70">검색</span>
+            <input
+              id="q"
+              type="text"
+              placeholder="예: 집착, 내려놓음, 자비, 호흡, 고요..."
+              class="mt-2 w-full rounded-xl bg-black/20 border border-white/10 px-4 py-3 outline-none focus:ring-2 focus:ring-violet-500/60 placeholder:text-white/40"
+            />
+          </label>
+
+          <label class="md:w-56">
+            <span class="block text-sm text-white/70">테마</span>
+            <select
+              id="theme"
+              class="mt-2 w-full rounded-xl bg-black/20 border border-white/10 px-4 py-3 outline-none focus:ring-2 focus:ring-violet-500/60"
+            >
+              <option value="">전체</option>
+            </select>
+          </label>
+
+          <div class="flex gap-3 md:w-auto">
+            <button
+              id="shuffleBtn"
+              class="w-full md:w-auto px-4 py-3 rounded-xl bg-white/10 hover:bg-white/15 border border-white/10 text-white font-semibold transition-colors"
+            >
+              오늘 다시 뽑기
+            </button>
+            <button
+              id="downloadBtn"
+              class="w-full md:w-auto px-4 py-3 rounded-xl bg-white/10 hover:bg-white/15 border border-white/10 text-white font-semibold transition-colors"
+            >
+              1000개 TXT
+            </button>
+          </div>
+        </div>
+
+        <p class="mt-4 text-sm text-white/50">
+          ※ 이 서비스는 불경 번역문을 인용하지 않고, 가르침에서 영감을 받아 새로
+          작성한 문장만 제공합니다.
+        </p>
+      </section>
+
+      <!-- List -->
+      <section class="mt-6">
+        <div class="flex items-center justify-between mb-3">
+          <h2 class="text-lg font-bold">문장 모음</h2>
+          <div class="text-sm text-white/60">
+            <span id="resultCount"></span>
+          </div>
+        </div>
+
+        <div id="list" class="grid grid-cols-1 gap-3"></div>
+
+        <!-- Pagination -->
+        <div class="mt-6 flex items-center justify-between">
+          <button
+            id="prevBtn"
+            class="px-4 py-2 rounded-xl bg-white/10 hover:bg-white/15 border border-white/10 disabled:opacity-40 disabled:hover:bg-white/10 transition-colors"
+          >
+            이전
+          </button>
+          <div class="text-sm text-white/60">
+            <span id="pageInfo"></span>
+          </div>
+          <button
+            id="nextBtn"
+            class="px-4 py-2 rounded-xl bg-white/10 hover:bg-white/15 border border-white/10 disabled:opacity-40 disabled:hover:bg-white/10 transition-colors"
+          >
+            다음
+          </button>
+        </div>
+      </section>
+
+      <!-- Other services button (your style) -->
+      <div class="flex justify-center pt-8 mt-12 border-t border-gray-200/20">
+        <a
+          href="https://funnyfunny.cloud/"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="px-6 py-3 bg-gray-900 hover:bg-gray-800 text-white rounded-lg font-medium transition-colors duration-200"
+        >
+          다른 서비스 보기
+        </a>
+      </div>
+
+      <footer class="mt-6 text-center text-xs text-white/40">
+        © <span id="year"></span> Temple Wisdom
+      </footer>
+    </main>
+
+    <script>
+      // ---------- 1000 sentences generator (Korean, reinterpreted, not quotes) ----------
+      const THEMES = [
+        "고요",
+        "호흡",
+        "집착 내려놓기",
+        "자비",
+        "연민",
+        "마음챙김",
+        "분노 다루기",
+        "욕심 다루기",
+        "불안 다루기",
+        "말과 침묵",
+        "관계",
+        "인내",
+        "절제",
+        "겸손",
+        "감사",
+        "균형",
+        "현재",
+        "행동",
+        "습관",
+        "지혜",
+        "연기",
+        "무상",
+      ];
+
+      // 문장 톤: 짧고 현대어 / 직접 인용 금지 / 번역투 회피
+      const OPENERS = [
+        "오늘은",
+        "지금은",
+        "가끔은",
+        "마음이 바쁠수록",
+        "생각이 많아질수록",
+        "화가 치밀 때는",
+        "불안이 올라올 때는",
+        "관계가 거칠어질 때는",
+        "욕심이 커질 때는",
+        "지치기 쉬운 날엔",
+        "길을 잃은 것 같을 때도",
+        "결정이 어려울 때는",
+        "말이 많아질수록",
+        "잠시 멈추면",
+        "숨을 알아차리면",
+        "몸을 느끼면",
+        "손을 놓으면",
+        "천천히 보면",
+        "서두르지 않으면",
+      ];
+
+      const CORES = [
+        "숨을 한 번",
+        "한 걸음만",
+        "지금 이 순간을",
+        "붙잡고 있던 것을",
+        "내려놓는 연습을",
+        "말을 줄이고",
+        "듣는 쪽을",
+        "부드러운 시선을",
+        "스스로에게 자비를",
+        "상대에게 여지를",
+        "작은 절제를",
+        "하나의 친절을",
+        "하나의 성실을",
+        "한 가지 선택을",
+        "관찰하는 태도를",
+        "판단을 잠깐",
+        "반응 대신",
+        "비교 대신",
+        "원망 대신",
+      ];
+
+      const ENDS = [
+        "해보자.",
+        "붙들어도 된다.",
+        "놓아도 된다.",
+        "충분하다.",
+        "괜찮다.",
+        "그대로 두어도 된다.",
+        "조금 부드러워지자.",
+        "조금 천천히 가자.",
+        "다시 시작하면 된다.",
+        "지금이 가장 빠르다.",
+        "오늘만 해보면 된다.",
+        "하나씩 줄이면 된다.",
+        "하나씩 키우면 된다.",
+        "마음이 가벼워진다.",
+        "길이 선명해진다.",
+      ];
+
+      const LINES = [
+        "붙잡을수록 마음은 무거워진다.",
+        "놓아주는 순간, 여유가 생긴다.",
+        "바깥이 시끄러울수록 안쪽을 정돈하자.",
+        "생각은 파도처럼 오고 간다.",
+        "감정은 사실이 아니라 신호다.",
+        "같은 행동은 같은 방향으로 이끈다.",
+        "작은 친절이 하루의 온도를 바꾼다.",
+        "지금의 한 번이 습관을 바꾼다.",
+        "말 한마디가 관계의 결을 만든다.",
+        "고요는 멀리 있지 않고 ‘주의’에 있다.",
+      ];
+
+      const TAILS = [
+        "내 마음을 다치게 하며 옳을 필요는 없다.",
+        "이기려는 마음이 먼저 올라오면 잠깐 멈추자.",
+        "지금의 선택이 내일의 성격이 된다.",
+        "자기 자신을 미워하면 세상도 거칠어진다.",
+        "나를 돌보는 마음이 남도 돌볼 수 있다.",
+        "불안은 빨리 해결하려 할수록 커질 때가 있다.",
+        "한 번의 호흡이 한 번의 반응을 바꾼다.",
+        "지금의 작은 절제가 큰 자유를 만든다.",
+        "부드러움은 약함이 아니라 훈련이다.",
+        "천천히 보면, 이미 충분한 것이 보인다.",
+      ];
+
+      function makeSentence(i) {
+        const theme = THEMES[i % THEMES.length];
+        const a = OPENERS[(i * 3) % OPENERS.length];
+        const b = CORES[(i * 5 + 1) % CORES.length];
+        const c = ENDS[(i * 7 + 2) % ENDS.length];
+
+        const extraA = i % 4 === 0 ? " " + LINES[(i / 4) % LINES.length] : "";
+        const extraB = i % 9 === 0 ? " " + TAILS[(i / 9) % TAILS.length] : "";
+
+        return {
+          id: i + 1,
+          theme,
+          text: `${a} ${b} ${c}${extraA}${extraB}`.replace(/\s+/g, " ").trim(),
+        };
+      }
+
+      const ALL = Array.from({ length: 1000 }, (_, i) => makeSentence(i));
+
+      // ---------- UI helpers ----------
+      const $ = (id) => document.getElementById(id);
+
+      function formatDateK(date) {
+        const y = date.getFullYear();
+        const m = String(date.getMonth() + 1).padStart(2, "0");
+        const d = String(date.getDate()).padStart(2, "0");
+        return `${y}.${m}.${d}`;
+      }
+
+      function dailyIndex(date, mod) {
+        const y = date.getFullYear();
+        const m = date.getMonth() + 1;
+        const d = date.getDate();
+        let x = (y * 10000 + m * 100 + d) >>> 0;
+        x = (x ^ 0x9e3779b9) >>> 0;
+        x = Math.imul(x ^ (x >>> 16), 0x85ebca6b) >>> 0;
+        x = Math.imul(x ^ (x >>> 13), 0xc2b2ae35) >>> 0;
+        x = (x ^ (x >>> 16)) >>> 0;
+        return x % mod;
+      }
+
+      async function copyText(text) {
+        try {
+          await navigator.clipboard.writeText(text);
+          return true;
+        } catch (_) {
+          const ta = document.createElement("textarea");
+          ta.value = text;
+          document.body.appendChild(ta);
+          ta.select();
+          try {
+            document.execCommand("copy");
+          } catch (e) {}
+          document.body.removeChild(ta);
+          return true;
+        }
+      }
+
+      function escapeHtml(str) {
+        return str
+          .replaceAll("&", "&amp;")
+          .replaceAll("<", "&lt;")
+          .replaceAll(">", "&gt;")
+          .replaceAll('"', "&quot;")
+          .replaceAll("'", "&#039;");
+      }
+
+      // ---------- State ----------
+      let filtered = [...ALL];
+      let page = 1;
+      const pageSize = 20;
+      let todayItem = null;
+      const shareBtnDefaultHtml = $("shareTodayBtn").innerHTML;
+
+      function renderThemes() {
+        const sel = $("theme");
+        const uniq = [...new Set(ALL.map((x) => x.theme))];
+        uniq.forEach((t) => {
+          const opt = document.createElement("option");
+          opt.value = t;
+          opt.textContent = t;
+          sel.appendChild(opt);
+        });
+      }
+
+      function setToday(forceRandom = false) {
+        const now = new Date();
+        const idx = forceRandom
+          ? Math.floor(Math.random() * ALL.length)
+          : dailyIndex(now, ALL.length);
+        const item = ALL[idx];
+
+        todayItem = item;
+        $("todayText").textContent = item.text;
+        $("todayTheme").textContent = `테마: ${item.theme}`;
+        $("todayDate").textContent = formatDateK(now);
+
+        $("copyTodayBtn").onclick = async () => {
+          const ok = await copyText(item.text);
+          if (ok) {
+            $("copyTodayBtn").textContent = "복사됨";
+            setTimeout(() => {
+              $("copyTodayBtn").innerHTML = `
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M8 4h10a2 2 0 0 1 2 2v10"></path>
+                  <rect x="4" y="8" width="14" height="14" rx="2"></rect>
+                </svg>
+                복사
+              `;
+            }, 900);
+          }
+        };
+      }
+
+      async function shareToday() {
+        if (!todayItem) return;
+        const btn = $("shareTodayBtn");
+        const message = `${todayItem.text}\n\n오늘의 마음에서 더 보기: https://temple.funnyfunny.cloud/\n출처: 오늘의 마음`;
+
+        try {
+          if (navigator.share) {
+            await navigator.share({
+              title: "오늘의 마음",
+              text: message,
+              url: "https://temple.funnyfunny.cloud/",
+            });
+            btn.textContent = "공유됨";
+          } else {
+            await copyText(message);
+            btn.textContent = "링크 복사됨";
+          }
+        } catch (_) {
+          await copyText(message);
+          btn.textContent = "링크 복사됨";
+        }
+
+        setTimeout(() => {
+          btn.innerHTML = shareBtnDefaultHtml;
+        }, 1000);
+      }
+
+      function applyFilter() {
+        const q = $("q").value.trim();
+        const th = $("theme").value;
+
+        filtered = ALL.filter((item) => {
+          const okTheme = !th || item.theme === th;
+          const okQ = !q || item.text.includes(q) || item.theme.includes(q);
+          return okTheme && okQ;
+        });
+
+        page = 1;
+        renderList();
+      }
+
+      function renderList() {
+        const start = (page - 1) * pageSize;
+        const items = filtered.slice(start, start + pageSize);
+
+        const list = $("list");
+        list.innerHTML = "";
+
+        items.forEach((item) => {
+          const card = document.createElement("div");
+          card.className =
+            "rounded-2xl bg-white/5 border border-white/10 p-5 hover:border-violet-400/40 transition-colors";
+
+          card.innerHTML = `
+            <div class="flex items-start justify-between gap-4">
+              <div class="min-w-0">
+                <div class="flex flex-wrap items-center gap-2">
+                  <span class="text-xs px-2 py-1 rounded-full bg-white/5 text-white/60 border border-white/10">#${
+                    item.id
+                  }</span>
+                  <span class="text-xs px-2 py-1 rounded-full bg-violet-500/15 text-violet-200 border border-violet-500/20">${
+                    item.theme
+                  }</span>
+                </div>
+                <p class="mt-3 text-base md:text-lg font-semibold leading-relaxed">${escapeHtml(
+                  item.text
+                )}</p>
+              </div>
+              <button class="copyBtn shrink-0 px-3 py-2 rounded-xl bg-white/10 hover:bg-white/15 border border-white/10 text-sm font-semibold transition-colors">
+                복사
+              </button>
+            </div>
+          `;
+
+          const btn = card.querySelector(".copyBtn");
+          btn.addEventListener("click", async () => {
+            const ok = await copyText(item.text);
+            if (ok) {
+              btn.textContent = "복사됨";
+              setTimeout(() => (btn.textContent = "복사"), 900);
+            }
+          });
+
+          list.appendChild(card);
+        });
+
+        const totalPages = Math.max(1, Math.ceil(filtered.length / pageSize));
+        $("prevBtn").disabled = page <= 1;
+        $("nextBtn").disabled = page >= totalPages;
+        $("pageInfo").textContent = `${page} / ${totalPages}`;
+        $("resultCount").textContent = `${filtered.length}개 결과`;
+      }
+
+      function downloadTxt() {
+        const lines = ALL.map((x) => `[${x.id}] (${x.theme}) ${x.text}`);
+        const blob = new Blob([lines.join("\n")], {
+          type: "text/plain;charset=utf-8",
+        });
+        const a = document.createElement("a");
+        a.href = URL.createObjectURL(blob);
+        a.download = "temple_wisdom_1000.txt";
+        a.click();
+      }
+
+      // ---------- init ----------
+      $("year").textContent = new Date().getFullYear();
+      $("countText").textContent = ALL.length;
+
+      renderThemes();
+      setToday(false);
+      applyFilter();
+
+      $("q").addEventListener("input", applyFilter);
+      $("theme").addEventListener("change", applyFilter);
+
+      $("prevBtn").addEventListener("click", () => {
+        page--;
+        renderList();
+      });
+      $("nextBtn").addEventListener("click", () => {
+        page++;
+        renderList();
+      });
+
+      $("shuffleBtn").addEventListener("click", () => setToday(true));
+      $("downloadBtn").addEventListener("click", downloadTxt);
+      $("shareTodayBtn").addEventListener("click", shareToday);
+    </script>
+  </body>
+</html>
