@@ -629,15 +629,13 @@
         const item = ALL[idx];
 
         todayItem = item;
-        const lang = window.currentLang || "ko";
-        const displayText = lang === "en" && item.text_en ? item.text_en : item.text;
+        const displayText = currentLang === "en" && item.text_en ? item.text_en : item.text;
         $("todayText").textContent = displayText;
         $("todayTheme").textContent = t("themePrefix", { theme: translateTheme(item.theme) });
         $("todayDate").textContent = formatDate(now);
 
         $("copyTodayBtn").onclick = async () => {
-          const lang = window.currentLang || "ko";
-          const displayText = lang === "en" && item.text_en ? item.text_en : item.text;
+          const displayText = currentLang === "en" && item.text_en ? item.text_en : item.text;
           const ok = await copyText(formatCopyText(displayText));
           if (ok) {
             $("copyTodayBtn").textContent = t("copyDone");
@@ -651,8 +649,7 @@
       async function shareToday() {
         if (!todayItem) return;
         const btn = $("shareTodayBtn");
-        const lang = window.currentLang || "ko";
-        const displayText = lang === "en" && todayItem.text_en ? todayItem.text_en : todayItem.text;
+        const displayText = currentLang === "en" && todayItem.text_en ? todayItem.text_en : todayItem.text;
         const message = `${displayText}\n\n${t("shareMessage")}`;
 
         try {
@@ -717,7 +714,7 @@
                   )}</span>
                 </div>
                 <p class="mt-3 text-base md:text-lg font-semibold leading-relaxed">${escapeHtml(
-                  (window.currentLang === "en" && item.text_en) ? item.text_en : item.text
+                  (currentLang === "en" && item.text_en) ? item.text_en : item.text
                 )}</p>
               </div>
               <button class="copyBtn shrink-0 px-3 py-2 rounded-xl bg-white/10 hover:bg-white/15 border border-white/10 text-sm font-semibold transition-colors">
@@ -728,8 +725,7 @@
 
           const btn = card.querySelector(".copyBtn");
           btn.addEventListener("click", async () => {
-            const lang = window.currentLang || "ko";
-            const displayText = lang === "en" && item.text_en ? item.text_en : item.text;
+            const displayText = currentLang === "en" && item.text_en ? item.text_en : item.text;
             const copyTextWithUrl = `${formatCopyText(
               displayText
             )} https://temple.funnyfunny.cloud/`;
@@ -795,6 +791,8 @@
       function setLang(lang, options = {}) {
         const nextLang = translations[lang] ? lang : defaultLang;
         currentLang = nextLang;
+        window.currentLang = currentLang;
+        document.documentElement.lang = nextLang;
         localStorage.setItem("preferredLang", nextLang);
         document.querySelectorAll(".lang-switch button").forEach((button) => {
           button.classList.toggle("active", button.dataset.lang === nextLang);
@@ -805,9 +803,9 @@
         if (prevTheme) {
           $("theme").value = prevTheme;
         }
+        // Update today's quote with new language
         if (todayItem) {
-          const lang = window.currentLang || "ko";
-          const displayText = lang === "en" && todayItem.text_en ? todayItem.text_en : todayItem.text;
+          const displayText = currentLang === "en" && todayItem.text_en ? todayItem.text_en : todayItem.text;
           $("todayText").textContent = displayText;
           $("todayTheme").textContent = t("themePrefix", {
             theme: translateTheme(todayItem.theme),
