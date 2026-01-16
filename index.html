@@ -630,20 +630,29 @@
 
         todayItem = item;
         const displayText = currentLang === "en" && item.text_en ? item.text_en : item.text;
-        $("todayText").textContent = displayText;
-        $("todayTheme").textContent = t("themePrefix", { theme: translateTheme(item.theme) });
-        $("todayDate").textContent = formatDate(now);
+        const todayTextEl = $("todayText");
+        const todayThemeEl = $("todayTheme");
+        const todayDateEl = $("todayDate");
+        const copyTodayBtnEl = $("copyTodayBtn");
+        
+        if (todayTextEl) todayTextEl.textContent = displayText;
+        if (todayThemeEl) {
+          todayThemeEl.textContent = t("themePrefix", { theme: translateTheme(item.theme) });
+        }
+        if (todayDateEl) todayDateEl.textContent = formatDate(now);
 
-        $("copyTodayBtn").onclick = async () => {
-          const displayText = currentLang === "en" && item.text_en ? item.text_en : item.text;
-          const ok = await copyText(formatCopyText(displayText));
-          if (ok) {
-            $("copyTodayBtn").textContent = t("copyDone");
-            setTimeout(() => {
-              renderCopyBtn();
-            }, 900);
-          }
-        };
+        if (copyTodayBtnEl) {
+          copyTodayBtnEl.onclick = async () => {
+            const displayText = currentLang === "en" && item.text_en ? item.text_en : item.text;
+            const ok = await copyText(formatCopyText(displayText));
+            if (ok) {
+              copyTodayBtnEl.textContent = t("copyDone");
+              setTimeout(() => {
+                renderCopyBtn();
+              }, 900);
+            }
+          };
+        }
       }
 
       async function shareToday() {
@@ -810,23 +819,35 @@
             const item = ALL[currentIndex];
             todayItem = item;
             const displayText = currentLang === "en" && item.text_en ? item.text_en : item.text;
-            $("todayText").textContent = displayText;
-            $("todayTheme").textContent = t("themePrefix", {
-              theme: translateTheme(item.theme),
-            });
-            $("todayDate").textContent = formatDate(new Date());
+            const todayTextEl = $("todayText");
+            const todayThemeEl = $("todayTheme");
+            const todayDateEl = $("todayDate");
+            const copyTodayBtnEl = $("copyTodayBtn");
+            
+            if (todayTextEl) todayTextEl.textContent = displayText;
+            if (todayThemeEl) {
+              todayThemeEl.textContent = t("themePrefix", {
+                theme: translateTheme(item.theme),
+              });
+            }
+            if (todayDateEl) todayDateEl.textContent = formatDate(new Date());
             
             // copyTodayBtn 이벤트 핸들러도 업데이트
-            $("copyTodayBtn").onclick = async () => {
-              const ok = await copyText(formatCopyText(displayText));
-              if (ok) {
-                $("copyTodayBtn").textContent = t("copyDone");
-                setTimeout(() => {
-                  renderCopyBtn();
-                }, 900);
-              }
-            };
+            if (copyTodayBtnEl) {
+              copyTodayBtnEl.onclick = async () => {
+                const ok = await copyText(formatCopyText(displayText));
+                if (ok) {
+                  copyTodayBtnEl.textContent = t("copyDone");
+                  setTimeout(() => {
+                    renderCopyBtn();
+                  }, 900);
+                }
+              };
+            }
           }
+        } else if (ALL.length > 0) {
+          // todayItem이 없으면 setToday를 호출하여 오늘의 문장 설정
+          setToday(false);
         }
         renderList();
         if (options.updateUrl) {
