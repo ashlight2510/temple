@@ -682,7 +682,9 @@
         filtered = ALL.filter((item) => {
           const okTheme = !th || item.theme === th;
           const translatedTheme = translateTheme(item.theme);
-          const okQ = !q || item.text.includes(q) || item.theme.includes(q) || translatedTheme.toLowerCase().includes(q.toLowerCase());
+          // 검색 시 현재 언어에 맞는 텍스트로 검색
+          const searchText = currentLang === "en" && item.text_en ? item.text_en : item.text;
+          const okQ = !q || searchText.includes(q) || item.theme.includes(q) || translatedTheme.toLowerCase().includes(q.toLowerCase());
           return okTheme && okQ;
         });
 
