@@ -534,10 +534,26 @@
       }
 
       let ALL = [];
+      let ALL_EN = [];
       let filtered = [];
       let page = 1;
       const pageSize = 20;
       let todayItem = null;
+      const hasHangul = (text) => /[\u3131-\u318E\uAC00-\uD7A3]/.test(text);
+      const hasEnglishText = (item) =>
+        typeof item.text_en === "string" &&
+        item.text_en.trim() &&
+        !hasHangul(item.text_en);
+      function getActiveItems() {
+        if (currentLang === "en" && ALL_EN.length) return ALL_EN;
+        return ALL;
+      }
+      function getDisplayText(item) {
+        if (currentLang === "en" && hasEnglishText(item)) {
+          return item.text_en;
+        }
+        return item.text;
+      }
       function renderCopyBtn() {
         $("copyTodayBtn").innerHTML = `${copyBtnIcon}<span>${t(
           "copyButton"
@@ -611,7 +627,7 @@
         const sel = $("theme");
         if (!sel) return;
         sel.innerHTML = `<option value="">${t("themeAll")}</option>`;
-        const uniq = [...new Set(ALL.map((x) => x.theme))];
+        const uniq = [...new Set(getActiveItems().map((x) => x.theme))];
         uniq.forEach((theme) => {
           const opt = document.createElement("option");
           opt.value = theme;
@@ -621,15 +637,16 @@
       }
 
       function setToday(forceRandom = false) {
-        if (!ALL.length) return;
+        const items = getActiveItems();
+        if (!items.length) return;
         const now = new Date();
         const idx = forceRandom
-          ? Math.floor(Math.random() * ALL.length)
-          : dailyIndex(now, ALL.length);
-        const item = ALL[idx];
+          ? Math.floor(Math.random() * items.length)
+          : dailyIndex(now, items.length);
+        const item = items[idx];
 
         todayItem = item;
-        const displayText = currentLang === "en" && item.text_en ? item.text_en : item.text;
+        const displayText = getDisplayText(item);
         const todayTextEl = $("todayText");
         const todayThemeEl = $("todayTheme");
         const todayDateEl = $("todayDate");
@@ -643,7 +660,7 @@
 
         if (copyTodayBtnEl) {
           copyTodayBtnEl.onclick = async () => {
-            const displayText = currentLang === "en" && item.text_en ? item.text_en : item.text;
+            const displayText = getDisplayText(item);
             const ok = await copyText(formatCopyText(displayText));
             if (ok) {
               copyTodayBtnEl.textContent = t("copyDone");
@@ -658,7 +675,7 @@
       async function shareToday() {
         if (!todayItem) return;
         const btn = $("shareTodayBtn");
-        const displayText = currentLang === "en" && todayItem.text_en ? todayItem.text_en : todayItem.text;
+        const displayText = getDisplayText(todayItem);
         const message = `${displayText}\n\n${t("shareMessage")}`;
 
         try {
@@ -684,15 +701,16 @@
       }
 
       function applyFilter() {
-        if (!ALL.length) return;
+        const items = getActiveItems();
+        if (!items.length) return;
         const q = $("q").value.trim();
         const th = $("theme").value;
 
-        filtered = ALL.filter((item) => {
+        filtered = items.filter((item) => {
           const okTheme = !th || item.theme === th;
           const translatedTheme = translateTheme(item.theme);
           // 검색 시 현재 언어에 맞는 텍스트로 검색
-          const searchText = currentLang === "en" && item.text_en ? item.text_en : item.text;
+          const searchText = getDisplayText(item);
           const okQ = !q || searchText.includes(q) || item.theme.includes(q) || translatedTheme.toLowerCase().includes(q.toLowerCase());
           return okTheme && okQ;
         });
@@ -725,7 +743,7 @@
                   )}</span>
                 </div>
                 <p class="mt-3 text-base md:text-lg font-semibold leading-relaxed">${escapeHtml(
-                  (currentLang === "en" && item.text_en) ? item.text_en : item.text
+                  getDisplayText(item)
                 )}</p>
               </div>
               <button class="copyBtn shrink-0 px-3 py-2 rounded-xl bg-white/10 hover:bg-white/15 border border-white/10 text-sm font-semibold transition-colors">
@@ -736,7 +754,7 @@
 
           const btn = card.querySelector(".copyBtn");
           btn.addEventListener("click", async () => {
-            const displayText = currentLang === "en" && item.text_en ? item.text_en : item.text;
+            const displayText = getDisplayText(item);
             const ok = await copyText(formatCopyText(displayText));
             if (ok) {
               btn.textContent = t("copyDone");
@@ -760,7 +778,9 @@
       }
 
       function downloadTxt() {
-        const lines = ALL.map((x) => `[${x.id}] (${x.theme}) ${x.text}`);
+        const lines = getActiveItems().map(
+          (x) => `[${x.id}] (${x.theme}) ${getDisplayText(x)}`
+        );
         const blob = new Blob([lines.join("\n")], {
           type: "text/plain;charset=utf-8",
         });
@@ -811,19 +831,21 @@
         if (prevTheme) {
           $("theme").value = prevTheme;
         }
+        $("countText").textContent = getActiveItems().length;
         // Update today's quote with new language - setToday를 다시 호출하여 완전히 업데이트
-        if (todayItem && ALL.length > 0) {
-          // 현재 todayItem의 인덱스를 찾아서 같은 인덱스의 문장을 새로운 언어로 표시
-          const currentIndex = ALL.findIndex(item => item.id === todayItem.id);
+        if (todayItem && getActiveItems().length > 0) {
+          const currentIndex = getActiveItems().findIndex(
+            (item) => item.id === todayItem.id
+          );
           if (currentIndex !== -1) {
-            const item = ALL[currentIndex];
+            const item = getActiveItems()[currentIndex];
             todayItem = item;
-            const displayText = currentLang === "en" && item.text_en ? item.text_en : item.text;
+            const displayText = getDisplayText(item);
             const todayTextEl = $("todayText");
             const todayThemeEl = $("todayTheme");
             const todayDateEl = $("todayDate");
             const copyTodayBtnEl = $("copyTodayBtn");
-            
+
             if (todayTextEl) todayTextEl.textContent = displayText;
             if (todayThemeEl) {
               todayThemeEl.textContent = t("themePrefix", {
@@ -831,8 +853,7 @@
               });
             }
             if (todayDateEl) todayDateEl.textContent = formatDate(new Date());
-            
-            // copyTodayBtn 이벤트 핸들러도 업데이트
+
             if (copyTodayBtnEl) {
               copyTodayBtnEl.onclick = async () => {
                 const ok = await copyText(formatCopyText(displayText));
@@ -844,12 +865,13 @@
                 }
               };
             }
+          } else {
+            setToday(false);
           }
-        } else if (ALL.length > 0) {
-          // todayItem이 없으면 setToday를 호출하여 오늘의 문장 설정
+        } else if (getActiveItems().length > 0) {
           setToday(false);
         }
-        renderList();
+        applyFilter();
         if (options.updateUrl) {
           const url = new URL(window.location.href);
           url.searchParams.set("lang", nextLang);
@@ -879,12 +901,13 @@
         try {
           const res = await fetch(DATA_URL);
           ALL = await res.json();
+          ALL_EN = ALL.filter((item) => hasEnglishText(item));
         } catch (err) {
           console.error(t("loadFail"), err);
           return;
         }
 
-        $("countText").textContent = ALL.length;
+        $("countText").textContent = getActiveItems().length;
         renderThemes();
         setToday(false);
         applyFilter();
