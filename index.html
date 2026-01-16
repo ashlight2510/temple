@@ -530,7 +530,7 @@
       }
 
       function formatCopyText(text) {
-        return `${text}${t("serviceTag")}`;
+        return `${text}${t("serviceTag")}\nhttps://temple.funnyfunny.cloud/`;
       }
 
       let ALL = [];
@@ -728,10 +728,7 @@
           const btn = card.querySelector(".copyBtn");
           btn.addEventListener("click", async () => {
             const displayText = currentLang === "en" && item.text_en ? item.text_en : item.text;
-            const copyTextWithUrl = `${formatCopyText(
-              displayText
-            )} https://temple.funnyfunny.cloud/`;
-            const ok = await copyText(copyTextWithUrl);
+            const ok = await copyText(formatCopyText(displayText));
             if (ok) {
               btn.textContent = t("copyDone");
               setTimeout(() => (btn.textContent = t("copyButton")), 900);
