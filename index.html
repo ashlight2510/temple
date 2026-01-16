@@ -295,7 +295,7 @@
               id="theme"
               class="mt-2 w-full rounded-xl bg-black/20 border border-white/10 px-4 py-3 outline-none focus:ring-2 focus:ring-violet-500/60"
             >
-              <option value="">전체</option>
+              <option value="" data-i18n="themeAll">전체</option>
             </select>
           </label>
 
@@ -609,6 +609,7 @@
 
       function renderThemes() {
         const sel = $("theme");
+        if (!sel) return;
         sel.innerHTML = `<option value="">${t("themeAll")}</option>`;
         const uniq = [...new Set(ALL.map((x) => x.theme))];
         uniq.forEach((theme) => {
@@ -772,6 +773,13 @@
         document.querySelectorAll("[data-i18n-placeholder]").forEach((el) => {
           el.setAttribute("placeholder", t(el.dataset.i18nPlaceholder));
         });
+        
+        // Update theme select first option
+        const themeSelect = $("theme");
+        if (themeSelect && themeSelect.firstElementChild) {
+          themeSelect.firstElementChild.textContent = t("themeAll");
+        }
+        
         renderCopyBtn();
         renderShareBtn();
       }
