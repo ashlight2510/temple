@@ -803,14 +803,31 @@
         if (prevTheme) {
           $("theme").value = prevTheme;
         }
-        // Update today's quote with new language
-        if (todayItem) {
-          const displayText = currentLang === "en" && todayItem.text_en ? todayItem.text_en : todayItem.text;
-          $("todayText").textContent = displayText;
-          $("todayTheme").textContent = t("themePrefix", {
-            theme: translateTheme(todayItem.theme),
-          });
-          $("todayDate").textContent = formatDate(new Date());
+        // Update today's quote with new language - setToday를 다시 호출하여 완전히 업데이트
+        if (todayItem && ALL.length > 0) {
+          // 현재 todayItem의 인덱스를 찾아서 같은 인덱스의 문장을 새로운 언어로 표시
+          const currentIndex = ALL.findIndex(item => item.id === todayItem.id);
+          if (currentIndex !== -1) {
+            const item = ALL[currentIndex];
+            todayItem = item;
+            const displayText = currentLang === "en" && item.text_en ? item.text_en : item.text;
+            $("todayText").textContent = displayText;
+            $("todayTheme").textContent = t("themePrefix", {
+              theme: translateTheme(item.theme),
+            });
+            $("todayDate").textContent = formatDate(new Date());
+            
+            // copyTodayBtn 이벤트 핸들러도 업데이트
+            $("copyTodayBtn").onclick = async () => {
+              const ok = await copyText(formatCopyText(displayText));
+              if (ok) {
+                $("copyTodayBtn").textContent = t("copyDone");
+                setTimeout(() => {
+                  renderCopyBtn();
+                }, 900);
+              }
+            };
+          }
         }
         renderList();
         if (options.updateUrl) {
