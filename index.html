@@ -629,12 +629,16 @@
         const item = ALL[idx];
 
         todayItem = item;
-        $("todayText").textContent = item.text;
+        const lang = window.currentLang || "ko";
+        const displayText = lang === "en" && item.text_en ? item.text_en : item.text;
+        $("todayText").textContent = displayText;
         $("todayTheme").textContent = t("themePrefix", { theme: translateTheme(item.theme) });
         $("todayDate").textContent = formatDate(now);
 
         $("copyTodayBtn").onclick = async () => {
-          const ok = await copyText(formatCopyText(item.text));
+          const lang = window.currentLang || "ko";
+          const displayText = lang === "en" && item.text_en ? item.text_en : item.text;
+          const ok = await copyText(formatCopyText(displayText));
           if (ok) {
             $("copyTodayBtn").textContent = t("copyDone");
             setTimeout(() => {
@@ -647,7 +651,9 @@
       async function shareToday() {
         if (!todayItem) return;
         const btn = $("shareTodayBtn");
-        const message = `${todayItem.text}\n\n${t("shareMessage")}`;
+        const lang = window.currentLang || "ko";
+        const displayText = lang === "en" && todayItem.text_en ? todayItem.text_en : todayItem.text;
+        const message = `${displayText}\n\n${t("shareMessage")}`;
 
         try {
           if (navigator.share) {
@@ -711,7 +717,7 @@
                   )}</span>
                 </div>
                 <p class="mt-3 text-base md:text-lg font-semibold leading-relaxed">${escapeHtml(
-                  item.text
+                  (window.currentLang === "en" && item.text_en) ? item.text_en : item.text
                 )}</p>
               </div>
               <button class="copyBtn shrink-0 px-3 py-2 rounded-xl bg-white/10 hover:bg-white/15 border border-white/10 text-sm font-semibold transition-colors">
@@ -722,8 +728,10 @@
 
           const btn = card.querySelector(".copyBtn");
           btn.addEventListener("click", async () => {
+            const lang = window.currentLang || "ko";
+            const displayText = lang === "en" && item.text_en ? item.text_en : item.text;
             const copyTextWithUrl = `${formatCopyText(
-              item.text
+              displayText
             )} https://temple.funnyfunny.cloud/`;
             const ok = await copyText(copyTextWithUrl);
             if (ok) {
@@ -798,6 +806,9 @@
           $("theme").value = prevTheme;
         }
         if (todayItem) {
+          const lang = window.currentLang || "ko";
+          const displayText = lang === "en" && todayItem.text_en ? todayItem.text_en : todayItem.text;
+          $("todayText").textContent = displayText;
           $("todayTheme").textContent = t("themePrefix", {
             theme: translateTheme(todayItem.theme),
           });
